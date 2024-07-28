@@ -1,0 +1,94 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<form method="post">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  <ul class=flashes>
+    {% for category, msg in messages %}
+    <li class="{{ category }}">{{ msg }}</li>
+    {% endfor %}
+  </ul>        
+  {% endif %}
+  {% endwith%}
+  
+  <div class="mb-3 row">
+    <label for="client" class="form-label-sm">Client</label>
+    <input required class="form-control-sm" list="datalistOptions" id="client" name="client" placeholder="Type to search..." autocomplete="off">
+    <datalist id="datalistOptions">
+      {% for i in q %}
+      <option value="{{ i.company }}"> {{ i.company }}</option>
+      {% endfor %}
+    </datalist>
+  </div>
+
+  <div class="mb-3 row">
+      <label for="brand" class="form-label-sm">Brand</label>
+      <input required type="text" class="form-control-sm" id="brand" name="brand" aria-describedby="brandHelp" autocomplete="off">
+    </div>
+
+    <div class="mb-3 row">
+      <label for="model" class="form-label-sm">Model</label>
+      <input required type="text" class="form-control-sm" id="model" name="model" autocomplete="off">
+    </div>
+    
+    <div class="mb-3 row">
+      <label for="serial" class="form-label-sm">Serial Number</label>
+      <input type="text" class="form-control-sm" id="serial" name="serial" autocomplete="off">
+    </div>
+
+    <div class="mb-3 row">
+      <label for="problem" class="form-label-sm">Problem/Issue</label>
+      <input required type="text" class="form-control-sm" id="problem" name="problem" autocomplete="off">
+    </div>
+
+    <div class="mb-3 row">
+      <label for="date_booked" class="form-label-sm">Date Booked In</label>
+      <input required type="date" class="form-control-sm" id="date_booked" name="date_booked">
+    </div>
+
+
+    <!-- <label for="dropdown" class="form-label">Repair Site</label>
+    <select required class="form-select-sm mb-3 row" aria-label="Default select example" id="repair_site" name="repair_site">
+      <option selected disabled value="">Choose...</option>
+      {% for i in q %}
+      <option value="{{ i.company }}"> {{ i.company }}</option>
+      {% endfor %}
+    </select> -->
+
+    <!-- <div class="mb-3">
+      <label for="repair_site" class="form-label">Repair Site</label>
+      <input required type="text" class="form-control" id="repair_site" name="repair_site">
+    </div> -->
+
+    <div class="mb-3 row">
+      <label for="etr" class="form-label-sm">ETR</label>
+      <input type="date" class="form-control-sm" id="etr" name="etr">
+    </div>
+
+    <!-- <div class="mb-3">
+      <label for="at_repair_site" class="form-label">At Repair Site</label>
+      <input type="text" class="form-control" id="at_repair_site" name="at_repair_site">
+    </div> -->
+    
+    <div class="form-check form-check-inline mb-3">
+      <input required class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1">
+      <label class="form-check-label" for="inlineRadio1">At Repair Site</label>
+    </div>
+    <div class="form-check form-check-inline mb-3">
+      <input required class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="0">
+      <label class="form-check-label" for="inlineRadio2">Collected</label>
+    </div>
+    
+    <!-- <div class="mb-3 form-check">
+      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+      <label class="form-check-label" for="exampleCheck1">Check me out</label>
+    </div> -->
+    <div class="mb-3">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+
+</form>
+
+{% endblock %}

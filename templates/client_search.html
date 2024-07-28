@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Company</th>
+        <th scope="col">Street</th>
+        <th scope="col">Suburb</th>
+        <th scope="col">Contact Person</th>
+        <th scope="col">Contact Number</th>
+        <th scope="col">Email</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for i in q %}
+            <tr>
+                <th scope="row">{{ i['id'] }}</th>
+                <td>{{ i['company'] }}</td>
+                <td>{{ i['street'] }}</td>
+                <td>{{ i['suburb'] }}</td>
+                <td>{{ i['contact_person'] }}</td>
+                <td>{{ i['contact_number'] }}</td>
+                <td>{{ i['email'] }}</td>
+                <td>
+                    <form action="/client/view/{{ i['id'] }}">
+                        <button type="submit" class="btn btn-primary" aria-label="Close">View/Edit</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+       
+    </tbody>
+  </table>
+
+{% endblock %}

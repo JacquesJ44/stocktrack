@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Client</th>
+        <th scope="col">Brand</th>
+        <th scope="col">Model</th>
+        <th scope="col">Serial Number</th>
+        <th scope="col">Problem/Issue</th>
+        <th scope="col">Date Booked In</th>
+        <th scope="col">ETR</th>
+        <th scope="col">At Repair Site?</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for i in q %}
+            <tr>
+                <th scope="row">{{ i['id'] }}</th>
+                <td>{{ i['client'] }}</td>
+                <td>{{ i['brand'] }}</td>
+                <td>{{ i['model'] }}</td>
+                <td>{{ i['serial'] }}</td>
+                <td>{{ i['problem'] }}</td>
+                <td>{{ i['date_booked'] }}</td>
+                <td>{{ i['etr'] }}</td>
+                <td>{{ i['at_repair_site'] }}</td>
+                <td>
+                    <form action="/repair/view/{{ i['id'] }}">
+                        <button type="submit" class="btn btn-primary" aria-label="Close">View/Edit</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+       
+    </tbody>
+  </table>
+
+{% endblock %}
