@@ -14,9 +14,9 @@
   {% endif %}
   {% endwith%}
   
-  <div class="mb-3 row">
-    <label for="client" class="form-label">Client</label>
-    <input required class="form-control-sm" list="datalistOptions" id="client" name="client" placeholder="{{ row['client'] }}" autocomplete="off">
+  <div class="mb-2 row">
+    <label for="client" class="col-form-label-sm">Client</label>
+    <input required class="form-control form-control-sm" list="datalistOptions" id="client" name="client" placeholder="{{ row['client'] }}" autocomplete="off" value="{{ row['client'] }}">
     <datalist id="datalistOptions">
       {% for i in q %}
       <option value="{{ i.company }}"> {{ i.company }}</option>
@@ -24,29 +24,29 @@
     </datalist>
   </div>
   
-  <div class="mb-3 row">
-    <label for="brand" class="form-label">Brand</label>
-      <input type="text" class="form-control-sm" id="brand" name="brand" value="{{ row['brand'] }}" aria-describedby="brandHelp">
+  <div class="mb-2 row">
+    <label for="brand" class="col-form-label-sm">Brand</label>
+      <input type="text" class="form-control form-control-sm" id="brand" name="brand" value="{{ row['brand'] }}" aria-describedby="brandHelp">
     </div>
 
-    <div class="mb-3 row">
-      <label for="model" class="form-label">Model</label>
-      <input type="text" class="form-control-sm" id="model" name="model" value="{{ row['model'] }}">
+    <div class="mb-2 row">
+      <label for="model" class="col-form-label-sm">Model</label>
+      <input type="text" class="form-control form-control-sm" id="model" name="model" value="{{ row['model'] }}">
     </div>
     
-    <div class="mb-3 row">
-      <label for="serial" class="form-label">Serial Number</label>
-      <input type="text" class="form-control-sm" id="serial" name="serial" value="{{ row['serial'] }}">
+    <div class="mb-2 row">
+      <label for="serial" class="col-form-label-sm">Serial Number</label>
+      <input type="text" class="form-control form-control-sm" id="serial" name="serial" value="{{ row['serial'] }}">
     </div>
 
-    <div class="mb-3 row">
-      <label for="problem" class="form-label">Problem/Issue</label>
-      <input type="text" class="form-control-sm" id="problem" name="problem" value="{{ row['problem'] }}">
+    <div class="mb-2 row">
+      <label for="problem" class="col-form-label-sm">Problem/Issue</label>
+      <input type="text" class="form-control form-control-sm" id="problem" name="problem" value="{{ row['problem'] }}">
     </div>
 
-    <div class="mb-3 row">
-      <label for="date_booked" class="form-label">Date Booked In</label>
-      <input type="date" class="form-control-sm" id="date_booked" name="date_booked" value="{{ row['date_booked'] }}">
+    <div class="mb-2 row">
+      <label for="date_booked" class="col-form-label-sm">Date Booked In</label>
+      <input type="date" class="form-control form-control-sm" id="date_booked" name="date_booked" value="{{ row['date_booked'] }}">
     </div>
 
 
@@ -55,32 +55,32 @@
       <input type="text" class="form-control" id="repair_site" name="repair_site" value ="{{ row['repair_site'] }}">
     </div> -->
 
-    <div class="mb-3 row">
-      <label for="etr" class="form-label">ETR</label>
-      <input type="date" class="form-control-sm" id="etr" name="etr" value ="{{ row['etr'] }}">
+    <div class="mb-2 row">
+      <label for="etr" class="col-form-label-sm">ETR</label>
+      <input type="date" class="form-control form-control-sm" id="etr" name="etr" value ="{{ row['etr'] }}">
     </div>
 
     {% if row['at_repair_site'] == 1 %}
-      <div class="form-check form-check-inline mb-3">
+      <div class="form-check form-check-inline mb-2">
         <input checked required class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1">
         <label class="form-check-label" for="inlineRadio1">At Repair Site</label>
       </div>
-      <div class="form-check form-check-inline mb-3">
+      <div class="form-check form-check-inline mb-2">
         <input required class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="0">
         <label class="form-check-label" for="inlineRadio2">Collected</label>
       </div>
     {% elif row['at_repair_site'] == 0 %}
-      <div class="form-check form-check-inline mb-3">
+      <div class="form-check form-check-inline mb-2">
         <input required class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1">
         <label class="form-check-label" for="inlineRadio1">At Repair Site</label>
       </div>
-      <div class="form-check form-check-inline mb-3">
+      <div class="form-check form-check-inline mb-2">
         <input checked required class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="0">
         <label class="form-check-label" for="inlineRadio2">Collected</label>
       </div>
     {% endif%}
 
-    <div class="mb-3">
+    <div class="mb-2">
       <a href="/repair/search" type="submit" class="btn btn-primary">Back</a>
       <button href="#" type="submit" class="btn btn-primary">Update</button>
     </div>  
