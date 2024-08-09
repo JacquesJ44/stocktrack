@@ -1,6 +1,8 @@
-from app import app, db, Item
+from app import db, Item
 
 from faker import Faker
+
+from . import app
 
 with app.app_context():
     fake = Faker()

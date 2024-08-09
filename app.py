@@ -1,16 +1,12 @@
-from app import app
-
-from flask import redirect, url_for, render_template, request, session, flash
+from flask import Flask, redirect, url_for, render_template, request, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import timedelta
+from flask import Flask
 
-# app = Flask(__name__)
-# app.secret_key = 'super secret keys'
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/jacquesdutoit/Developer/StockTrack/stocktrack.db'
-# app.config['TRACK_MODIFICATIONS'] = False   
-# app.permanent_session_lifetime = timedelta(minutes=60)
+app = Flask(__name__)
 
-print(app.config)
+app.config.from_object('config.Config')
+# print(app.config)
 
 db = SQLAlchemy(app)
 class Item(db.Model):
@@ -242,4 +238,4 @@ def logout():
     return redirect(url_for('login'))
     
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port=5000)
