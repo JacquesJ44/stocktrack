@@ -1,12 +1,12 @@
 from flask import Flask, redirect, url_for, render_template, request, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import timedelta
+from flask import Flask
 
 app = Flask(__name__)
-app.secret_key = 'super secret keys'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/jacquesdutoit/Developer/StockTrack/stocktrack.db'
-app.config['TRACK_MODIFICATIONS'] = False   
-# app.permanent_session_lifetime = timedelta(minutes=60)
+
+app.config.from_object('config.Config')
+# print(app.config)
 
 db = SQLAlchemy(app)
 class Item(db.Model):
@@ -78,15 +78,15 @@ def c_obj_to_dict(self):
         "email": self.email,  
     }
 
-SECURE_PASSWORD = 'admin'
 @app.route('/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         # session.permanent = True
-        if request.form['password'] == SECURE_PASSWORD:
+        if request.form['password'] == app.config['SECURE_PASSWORD']:
             session['logged_in'] = True
             return redirect(url_for('repair'))
         else:
+            flash('Incorrect Password', category="error")
             return render_template('login.html', error=True)
     else:
         if 'logged_in' in session:
@@ -238,4 +238,4 @@ def logout():
     return redirect(url_for('login'))
     
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port=5000)

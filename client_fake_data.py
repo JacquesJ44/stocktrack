@@ -1,6 +1,8 @@
-from app import app, db, Client
+from app import db, Client
 
 from faker import Faker
+
+from . import app
 
 with app.app_context():
     fake = Faker()
