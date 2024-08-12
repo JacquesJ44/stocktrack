@@ -1,14 +1,17 @@
 from flask import Flask, redirect, url_for, render_template, request, session, flash
 from flask_sqlalchemy import SQLAlchemy
-from datetime import timedelta
-from flask import Flask
+from flask_session import Session
 
 app = Flask(__name__)
 
 app.config.from_object('config.Config')
+
 # print(app.config)
+# print(basedir)
 
 db = SQLAlchemy(app)
+Session(app)
+
 class Item(db.Model):
     __tablename__ = 'item'
     id = db.Column(db.Integer, primary_key=True)
@@ -21,7 +24,6 @@ class Item(db.Model):
     etr = db.Column(db.String(100))
     at_repair_site = db.Column(db.Boolean())
 
-    
     def __init__(self, client, brand, model, serial, problem, date_booked, etr, at_repair_site):
         self.client = client
         self.brand = brand
@@ -53,31 +55,32 @@ class Client(db.Model):
 with app.app_context():
     db.create_all()
 
-
 # this function will translate an object from the STOCK class into JSON format
-def r_obj_to_dict(self):
-    return {
-        # "id": self.id,
-        "client": self.client,  
-        "brand": self.brand,
-        "model": self.model,
-        "serial": self.serial,
-        "problem": self.problem,
-        "date_booked": self.date_booked,
-        "etr": self.etr,
-        "at_repair_site": self.at_repair_site
-    }
-def c_obj_to_dict(self):
-    return {
-        # "id": self.id,
-        "company": self.company,
-        "street": self.street,
-        "suburb": self.suburb,
-        "contact_person": self.contact_person,
-        "contact_number": self.contact_number,
-        "email": self.email,  
-    }
-
+# def r_obj_to_dict(self):
+#     return {
+#         # "id": self.id,
+#         "client": self.client,  
+#         "brand": self.brand,
+#         "model": self.model,
+#         "serial": self.serial,
+#         "problem": self.problem,
+#         "date_booked": self.date_booked,
+#         "etr": self.etr,
+#         "at_repair_site": self.at_repair_site
+#     }
+# def c_obj_to_dict(self):
+#     return {
+#         # "id": self.id,
+#         "company": self.company,
+#         "street": self.street,
+#         "suburb": self.suburb,
+#         "contact_person": self.contact_person,
+#         "contact_number": self.contact_number,
+#         "email": self.email,  
+#     }
+def get_client_repairs(client):
+    return Item.query.filter(Item.client.like('%' + client + '%'))
+    
 @app.route('/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -104,7 +107,6 @@ def repair():
         db.session.add(item)
         db.session.commit()
 
-        #this needs to display properly!!!!!!!!!!!!!!!!!!!
         flash('Record was successfully added!', category='success')
         
         return redirect(url_for('repair'))
@@ -124,7 +126,6 @@ def client():
         db.session.add(item)
         db.session.commit()
 
-        #this needs to display properly!!!!!!!!!!!!!!!!!!!
         flash('Record was successfully added!', category='success', )
         
         return redirect(url_for('client'))
@@ -135,16 +136,13 @@ def client():
         else:
             return redirect(url_for('login'))
         
-# @app.route('/search', methods=['GET', 'POST'])
-# def search():
-#     if request.method == 'POST':
-#         return "<h1>Search Results</h1>" 
-#     else:
-#         if 'logged_in' in session:
-#             # print(session['logged_in'])
-#             return render_template('search.html')
-#         else:
-#             return redirect(url_for('login'))
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    if request.method == 'POST':
+        q = request.form.get('search')
+        row = get_client_repairs(q)
+        return render_template('search.html', q=row) 
+   
 @app.route('/repair/search', methods=['GET', 'POST'])
 def repair_search():
     if request.method == 'POST':
@@ -187,7 +185,6 @@ def repair_view(id):
             
             db.session.commit()
 
-            #this needs to display properly!!!!!!!!!!!!!!!!!!!
             flash('Record was successfully updated!', category='success')
 
             return render_template('repair_view.html', row=row)
@@ -225,7 +222,6 @@ def client_view(id):
             
             db.session.commit()
 
-            #this needs to display properly!!!!!!!!!!!!!!!!!!!
             flash('Record was successfully updated!', category='success', )
 
             return render_template('client_view.html', row=row)

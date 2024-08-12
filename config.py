@@ -10,8 +10,10 @@ class Config(object):
     # Base config
     SECRET_KEY = os.urandom(12).hex()
     SECURE_PASSWORD = os.environ.get('SECURE_PASSWORD')
+    
     # Session config
-    # SESSION_COOKIE_NAME = environ.get('SESSION_COOKIE_NAME')
+    SESSION_COOKIE_SAME_SITE = 'Lax'
+    SESSION_COOKIE_SECURE = False
     SESSION_PERMANENT = False
     SESSION_TYPE = 'filesystem'
     
